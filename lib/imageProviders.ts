@@ -47,14 +47,23 @@ class LoremPicsumProvider implements ImageProvider {
     );
     if (!res.ok) throw new Error("Failed to fetch images");
     const data = await res.json();
-    return data.map((item: any) => ({
-      id: item.id,
-      author: item.author,
-      width: item.width,
-      height: item.height,
-      url: item.url,
-      downloadUrl: item.download_url,
-    }));
+    return data.map(
+      (item: {
+        id: string;
+        author: string;
+        width: number;
+        height: number;
+        url: string;
+        download_url: string;
+      }) => ({
+        id: item.id,
+        author: item.author,
+        width: item.width,
+        height: item.height,
+        url: item.url,
+        downloadUrl: item.download_url,
+      })
+    );
   }
 
   async getImageInfo(id: string): Promise<ImageInfo> {
